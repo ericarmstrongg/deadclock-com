@@ -1,0 +1,10 @@
+# Everything here lives in the repo but must not be served as a static asset.
+node_modules
+.wrangler
+.git
+.gitignore
+package.json
+package-lock.json
+wrangler.jsonc
+README.md
+.DS_Store
