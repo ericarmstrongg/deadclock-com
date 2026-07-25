@@ -14,6 +14,7 @@ Cloudflare Workers static assets, same setup as `pickle-plate-com`.
 | `styles.css` | All styling |
 | `images/` | Wordmark, clock mark, app icon, OG image |
 | `wrangler.jsonc` | Cloudflare config (`assets.directory` is the repo root) |
+| `.assetsignore` | Keeps `node_modules` and configs out of the upload — **don't delete it**, a bare deploy fails without it |
 
 ## Local preview
 
