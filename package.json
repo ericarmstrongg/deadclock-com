@@ -1,0 +1,12 @@
+{
+  "name": "deadclock-com",
+  "private": true,
+  "description": "Marketing site for the Deadclock desktop overlay",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
+}

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deadclock for Windows — Spawn timers that sync themselves</title>
+<meta name="description" content="A free always-on-top overlay for Deadlock. It reads your match clock off the screen and keeps every spawn, buff and mid-boss timer in sync automatically. No stopwatch, no alt-tab." />
+<link rel="canonical" href="https://deadclock.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Deadclock" />
+<meta property="og:title" content="Deadclock for Windows — Spawn timers that sync themselves" />
+<meta property="og:description" content="A free always-on-top overlay for Deadlock. It reads your match clock off the screen and keeps every spawn, buff and mid-boss timer in sync automatically." />
+<meta property="og:url" content="https://deadclock.com/" />
+<meta property="og:image" content="https://deadclock.com/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="images/mark.png" />
+<link rel="apple-touch-icon" href="images/icon-512.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="images/wordmark.png" alt="Deadclock" /></a>
+    <nav class="header-nav">
+      <a class="hide-sm" href="#features">Features</a>
+      <a class="hide-sm" href="#install">Install</a>
+      <a href="https://github.com/ericarmstrongg/deadclock-desktop">GitHub</a>
+      <a class="btn btn-primary btn-sm" href="#download">Download</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><span class="dot"></span> Free overlay for Windows</p>
+      <h1>Never miss a spawn.<br /><em>Never touch a stopwatch.</em></h1>
+      <p class="lead">
+        Deadclock sits on top of Deadlock and reads the match clock straight off your screen — so
+        every camp, buff and boss timer stays in sync on its own. Start a game and it's already
+        counting.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#download">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.2 4.5v6.9H3V5.5Zm0 13 7.2 1v-6.8H3v5.8Zm8.4 1.2L21 21V12.6h-9.6v7.1ZM11.4 4.3 21 3v8.4h-9.6V4.3Z"/></svg>
+          Download for Windows
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/ericarmstrongg/deadclock-desktop">
+          <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.35c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+          Source on GitHub
+        </a>
+      </div>
+      <p class="hero-note">
+        <strong>Windows 10 / 11</strong> &nbsp;·&nbsp; No account, no telemetry &nbsp;·&nbsp;
+        Also on <a href="https://apps.apple.com/gb/app/deadclock-spawn-timers/id6738394006">iPhone</a>
+      </p>
+    </div>
+
+    <div class="overlay-stage">
+      <div class="overlay" role="img" aria-label="Preview of the Deadclock overlay showing a match clock and countdown timers">
+        <div class="overlay-bar">
+          <img src="images/wordmark.png" alt="" />
+          <span class="overlay-clock" id="matchClock">12:04</span>
+        </div>
+        <ul class="timers" id="timerList">
+          <li><span class="pip"></span><span class="label">Bridge Buff</span><span class="cd">1:56</span></li>
+          <li><span class="pip"></span><span class="label">Jungle Camps</span><span class="cd">0:56</span></li>
+          <li><span class="pip"></span><span class="label">Urn Spawn</span><span class="cd">2:56</span></li>
+          <li><span class="pip"></span><span class="label">Mid Boss</span><span class="cd">4:26</span></li>
+          <li><span class="pip"></span><span class="label">Soul Orbs</span><span class="cd">0:26</span></li>
+        </ul>
+        <div class="overlay-bar" style="border-top:1px solid rgba(240,226,203,.1); border-bottom:none;">
+          <span class="sync"><span class="dot"></span> Synced</span>
+        </div>
+      </div>
+      <p class="stage-caption">The overlay, docked wherever you drag it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-eyebrow">What it does</p>
+      <h2>It watches the clock so you can watch the lane.</h2>
+      <p>
+        Deadlock is a game of precision. Deadclock keeps you a step ahead of every objective without
+        asking you to remember when the match started.
+      </p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="glyph"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+        <h3>Syncs itself, all match</h3>
+        <p>It reads Deadlock's own match clock off-screen about once a second and corrects its timers to match. Nothing to start, nothing to nudge.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v5c0 4.5 3.3 8.3 8 9 4.7-.7 8-4.5 8-9V7l-8-4Z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+        <h3>Mid boss, handled</h3>
+        <p>It spots the kill on the HUD and starts the respawn timer on its own — 7, 6 then 5 minutes by kill number — plus the 4-minute rejuvenator.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 14 18 8Z"/><path d="M10.3 19a2 2 0 0 0 3.4 0"/></svg></div>
+        <h3>Warnings you can't miss</h3>
+        <p>Screen flashes and an alert sound land before the event, not on it. Set your own lead time, colors and sound in Settings.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg></div>
+        <h3>Locks out of your way</h3>
+        <p>Lock the panel and it goes click-through — it can never steal a mouse input from the game. Unlock from the tray icon or a hotkey.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/><path d="M17 15.5 20 18l-3 2.5"/></svg></div>
+        <h3>Collapsed or full</h3>
+        <p>Keep it small with just the next timer or two, then expand to the full list and detail when you're planning a push. Drag it anywhere.</p>
+      </div>
+      <div class="feature">
+        <div class="glyph"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8v8M19 8v8M8.5 5.5v13M15.5 5.5v13"/></svg></div>
+        <h3>Same data as the app</h3>
+        <p>It pulls the same timer content as the iOS Deadclock app, so when the game changes the timers change with it — no reinstall.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="install">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="section-eyebrow">Getting set up</p>
+        <h2>Two minutes, then forget about it.</h2>
+        <p style="color:var(--cream-dim); margin:0 0 24px;">
+          Download, run, launch Deadlock. The overlay appears when the game does and hides when you
+          quit — no need to keep a window around.
+        </p>
+
+        <div class="callout">
+          <h3>Run Deadlock in borderless windowed mode</h3>
+          <p>
+            An overlay can only draw over the game in borderless windowed (windowed fullscreen) mode
+            — exclusive fullscreen hides it. Deadlock ships borderless by default, so this is only a
+            problem if you changed it.
+          </p>
+        </div>
+
+        <div class="callout" style="margin-top:16px;">
+          <h3>"Windows protected your PC"</h3>
+          <p>
+            Deadclock isn't code-signed — certificates cost money and this is a free community tool
+            — so SmartScreen may warn you the first time. Click <strong>More info → Run
+            anyway</strong>. The source is on GitHub if you'd rather read it first.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <p class="section-eyebrow">Default hotkeys</p>
+        <h2 style="font-size:clamp(26px,3vw,32px);">All of it rebindable.</h2>
+        <table class="keytable">
+          <thead>
+            <tr><th>Action</th><th style="text-align:right;">Shortcut</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Lock / unlock click-through</td><td><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>L</kbd></td></tr>
+            <tr><td>Show / hide overlay</td><td><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>D</kbd></td></tr>
+            <tr><td>Resync clock now</td><td><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>R</kbd></td></tr>
+            <tr><td>Pause / resume clock</td><td><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>P</kbd></td></tr>
+          </tbody>
+        </table>
+        <p class="meta">
+          Right-click the panel — or the tray icon — for lock, opacity, resync, manual clock and
+          settings.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section download" id="download">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-eyebrow">Download</p>
+      <h2>Free, and it stays free.</h2>
+      <p>Windows 10 or 11, 64-bit. Pick whichever you prefer — they're the same app.</p>
+    </div>
+
+    <div class="dl-grid">
+      <div class="dl-card primary">
+        <p class="dl-tag">Recommended</p>
+        <h3>Installer</h3>
+        <p>
+          Installs per-user, so no admin password. Optional desktop shortcut and
+          start-with-Windows, and it updates cleanly over itself.
+        </p>
+        <a class="btn btn-primary" href="https://github.com/ericarmstrongg/deadclock-desktop/releases/latest">
+          Download installer
+        </a>
+      </div>
+      <div class="dl-card">
+        <p class="dl-tag">No install</p>
+        <h3>Portable</h3>
+        <p>
+          One <code>.exe</code>, double-click and go. The .NET runtime is bundled, so there's
+          nothing else to install and nothing left behind.
+        </p>
+        <a class="btn btn-ghost" href="https://github.com/ericarmstrongg/deadclock-desktop/releases/latest/download/DeadclockOverlay.exe">
+          Download portable .exe
+        </a>
+      </div>
+    </div>
+
+    <p class="meta">
+      No account and no sign-in. Deadclock reads a few public, read-only collections for timer
+      content and sends nothing back — there's no telemetry. Screen capture is limited to Deadlock's
+      own window, so your desktop is never in frame.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cross">
+      <img src="images/icon-512.png" alt="Deadclock for iPhone" />
+      <div>
+        <h3>There's an iPhone app too.</h3>
+        <p>
+          The original Deadclock: the same timers, plus soul values and patch notes, on a second
+          screen next to you.
+        </p>
+      </div>
+      <a class="btn btn-ghost" href="https://apps.apple.com/gb/app/deadclock-spawn-timers/id6738394006">
+        View on the App Store
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <img src="images/mark.png" alt="" />
+      <span>Deadclock — by Eric Armstrong</span>
+    </div>
+    <nav class="footer-links">
+      <a href="#download">Download</a>
+      <a href="https://github.com/ericarmstrongg/deadclock-desktop">GitHub</a>
+      <a href="https://github.com/ericarmstrongg/deadclock-desktop/issues">Report a bug</a>
+      <a href="https://apps.apple.com/gb/app/deadclock-spawn-timers/id6738394006">iOS app</a>
+    </nav>
+  </div>
+  <div class="wrap">
+    <p class="disclaimer">
+      Deadclock is an unofficial community tool. It is not affiliated with, endorsed by, or
+      sponsored by Valve Corporation. Deadlock and the Deadlock logo are trademarks of Valve
+      Corporation.
+    </p>
+  </div>
+</footer>
+
+<script>
+// Overlay preview. Ticks a fake match clock and counts down to the next occurrence of each
+// event so the panel reads as live. Intervals here are for display only — the real app pulls
+// its timer content from the same source as the iOS app.
+(function () {
+  var EVENTS = [
+    { label: 'Bridge Buff',   every: 300, offset: 120 },
+    { label: 'Jungle Camps',  every: 120, offset:  60 },
+    { label: 'Urn Spawn',     every: 300, offset: 240 },
+    { label: 'Mid Boss',      every: 420, offset: 390 },
+    { label: 'Soul Orbs',     every:  60, offset:  30 }
+  ];
+  var WARN_AT = 30; // seconds of lead time before an event turns red
+
+  var list = document.getElementById('timerList');
+  var clockEl = document.getElementById('matchClock');
+  if (!list || !clockEl) return;
+
+  // Replace the static no-JS rows with live ones.
+  list.textContent = '';
+  var rows = EVENTS.map(function (ev) {
+    var li = document.createElement('li');
+    li.innerHTML = '<span class="pip"></span><span class="label"></span><span class="cd"></span>';
+    li.querySelector('.label').textContent = ev.label;
+    list.appendChild(li);
+    return { ev: ev, li: li, cd: li.querySelector('.cd') };
+  });
+
+  function mmss(total) {
+    var m = Math.floor(total / 60);
+    var s = total % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  var match = 724; // start the preview at 12:04, mid-game
+
+  function tick() {
+    clockEl.textContent = mmss(match);
+    rows.forEach(function (r) {
+      var into = (match - r.ev.offset) % r.ev.every;
+      var left = ((r.ev.every - into) % r.ev.every) || r.ev.every;
+      r.cd.textContent = mmss(left);
+      r.li.classList.toggle('warn', left <= WARN_AT);
+    });
+    match += 1;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
+</body>
+</html>
