@@ -1,0 +1,512 @@
+/* Deadclock marketing site. Flat and dark, using the apps' palette. Mobile-first. */
+
+@font-face {
+  font-family: "DM Serif Display";
+  src: url("/fonts/dm-serif-display-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  --bg:        #0e1814;
+  --bg-rgb:    14 24 20;
+  --surface:   #16231d;
+  --cream:     #f0dec0;
+  --cream-dim: #c2b8a3;
+  --muted:     #8b9489;
+  --line:      rgb(240 222 192 / 0.14);
+  --line-hi:   rgb(240 222 192 / 0.3);
+  --orange:    #ff962d;
+  --orange-hi: #ffae33;
+  --on-orange: #1c1204;
+
+  --sans: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  --wrap: 1100px;
+  --gutter: 20px;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--cream);
+  font: 17px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* DM Serif Display only has a regular weight. Asking for bold would fake it. */
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.narrow { max-width: calc(760px + var(--gutter) * 2); }
+
+/* ---------- header and footer ---------- */
+
+.site-header { border-bottom: 1px solid var(--line); }
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+.brand img { width: 139px; height: 26px; }
+
+.site-footer {
+  margin-top: 80px;
+  padding: 36px 0 44px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-bottom: 20px;
+}
+
+.footer-links a { color: var(--cream-dim); text-decoration: none; }
+.footer-links a:hover { color: var(--orange); }
+
+.site-footer p { margin: 0 0 6px; }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1.5px solid var(--line-hi);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cream);
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover { border-color: var(--cream); }
+
+.btn-sm { min-height: 40px; padding: 0 16px; font-size: 15px; }
+
+/*
+ * Which download button is the main one depends on <html data-platform>, set by
+ * site.js. On Windows the Windows button leads, on iOS the iPhone button leads,
+ * anywhere else (and with JS off) both do.
+ */
+.btn-primary,
+html:not([data-platform="ios"]) .btn[data-dl="windows"],
+html:not([data-platform="windows"]) .btn[data-dl="ios"] {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--on-orange);
+}
+
+.btn-primary:hover,
+html:not([data-platform="ios"]) .btn[data-dl="windows"]:hover,
+html:not([data-platform="windows"]) .btn[data-dl="ios"]:hover {
+  background: var(--orange-hi);
+  border-color: var(--orange-hi);
+}
+
+/* Download button group */
+.dl {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dl .btn { width: 100%; }
+
+html[data-platform="ios"] .dl .btn[data-dl="ios"] { order: -1; }
+
+.note {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.note a { color: var(--cream-dim); text-underline-offset: 3px; }
+.note a:hover { color: var(--orange); }
+
+/* ---------- landing page sections ---------- */
+
+.section { padding-top: 72px; }
+
+.section h2 {
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 36px;
+}
+
+.section .dl { margin-top: 28px; }
+.section .note { margin: 14px 0 0; text-align: center; }
+
+.duo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 28px;
+}
+
+figure { margin: 0; }
+
+figcaption {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--cream-dim);
+}
+
+.phones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.phones .frame { border-radius: 24px; }
+.phones .ph { padding: 10px; font-size: 12px; }
+.phones .ph p { display: none; }
+
+.phone-line {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 19px;
+  color: var(--cream-dim);
+}
+
+.phone-section .dl { max-width: 600px; margin-inline: auto; }
+
+/* ---------- image frames and placeholders ---------- */
+/* A placeholder shows until the real file exists in /images, then site.js hides it. */
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border: 1.5px dashed var(--line-hi);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.frame > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.js .frame:not(.loaded) > img { opacity: 0; }
+
+.frame.loaded { border: 1px solid var(--line); background: none; }
+.frame.loaded .ph { display: none; }
+
+.r-2x1   { aspect-ratio: 2 / 1; }
+.r-4x3   { aspect-ratio: 4 / 3; }
+.r-phone { aspect-ratio: 1290 / 2796; }
+
+.ph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.ph strong { font-size: 16px; font-weight: 650; color: var(--cream-dim); }
+.ph code { font: 13px var(--mono); }
+.ph p { max-width: 46ch; margin: 8px 0 0; font-size: 14px; }
+
+/* ---------- landing hero ---------- */
+/*
+ * The screenshot runs edge to edge and fades into the page. On phones it sits on
+ * top and the headline overlaps its faded bottom. From 900px up it fills the first
+ * screen and the headline sits over a dark fade on the left.
+ */
+
+.home .site-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 5;
+  border-bottom: 0;
+  background: linear-gradient(rgb(var(--bg-rgb) / 0.85), transparent);
+}
+
+.hero { position: relative; }
+
+.frame.hero-frame {
+  aspect-ratio: 1 / 1;
+  border: 0;
+  border-radius: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent);
+          mask-image: linear-gradient(to bottom, #000 62%, transparent);
+}
+
+/* Narrow screens crop the sides. The left is the quiet part of the shot, so crop that. */
+.hero-frame > img { object-position: 75% 50%; }
+
+.frame.hero-frame:not(.loaded) {
+  outline: 1.5px dashed var(--line-hi);
+  outline-offset: -14px;
+}
+
+.hero-frame .ph { padding-bottom: 30%; }
+
+.hero-copy {
+  position: relative;
+  margin-top: -64px;
+  text-align: center;
+}
+
+.hero h1 {
+  max-width: 14em;
+  margin: 0 auto;
+  font-size: clamp(34px, 9.4vw, 46px);
+  text-shadow: 0 2px 28px rgb(var(--bg-rgb) / 0.9);
+}
+
+.hero .sub {
+  margin: 14px 0 26px;
+  font-size: 19px;
+  color: var(--cream-dim);
+}
+
+.hero .note { margin: 16px 0 0; }
+
+/* ---------- windows-only dialog ---------- */
+
+dialog {
+  width: min(440px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid var(--line-hi);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--cream);
+}
+
+dialog::backdrop { background: rgb(0 0 0 / 0.65); }
+
+.dialog-body { padding: 24px; }
+
+dialog h2 { margin-bottom: 8px; font-size: 26px; }
+dialog p { margin: 0 0 22px; color: var(--cream-dim); }
+
+.dialog-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.dialog-actions form { display: contents; }
+.dialog-actions .btn { flex: 1 1 140px; }
+
+.dialog-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.dialog-link:hover { color: var(--orange); }
+
+/* ---------- inner pages (support, privacy, terms, 404) ---------- */
+
+.page-head { padding: 48px 0 28px; }
+.page-head h1 { font-size: clamp(38px, 6vw, 54px); }
+.page-head .note { margin: 10px 0 0; }
+
+.prose { color: var(--cream-dim); }
+
+.prose h2,
+.prose h3 {
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+
+.prose h2 { margin: 40px 0 12px; font-size: 21px; }
+.prose h3 { margin: 24px 0 8px; font-size: 17px; }
+.prose p, .prose ul { margin: 0 0 14px; }
+.prose ul { padding-left: 22px; }
+.prose li { margin-bottom: 6px; }
+.prose li::marker { color: var(--orange); }
+.prose strong { color: var(--cream); font-weight: 650; }
+
+.prose a, .link {
+  color: var(--orange);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover, .link:hover { color: var(--orange-hi); }
+
+.caps { text-transform: uppercase; font-size: 15px; }
+
+/* support */
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.contact h2 { margin: 0 0 4px; font-size: 26px; }
+.contact p { margin: 0; color: var(--cream-dim); }
+
+.faq { margin-top: 48px; }
+.faq h2 { margin-bottom: 12px; font-size: 30px; }
+
+.faq details { border-bottom: 1px solid var(--line); }
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 2px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker { display: none; }
+
+.faq summary::after {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-right: 4px;
+  border-right: 2px solid var(--orange);
+  border-bottom: 2px solid var(--orange);
+  transform: rotate(45deg) translateY(-3px);
+}
+
+.faq details[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
+
+.faq details p { margin: 0; padding: 0 2px 20px; color: var(--cream-dim); }
+
+/* 404 */
+
+.lost { padding: 96px 0 24px; text-align: center; }
+.lost h1 { font-size: 46px; }
+.lost p { margin: 12px 0 28px; color: var(--cream-dim); }
+
+/* ---------- wider screens ---------- */
+
+@media (min-width: 560px) {
+  .dl { flex-direction: row; justify-content: center; }
+  .dl .btn { width: auto; min-width: 220px; }
+  .contact { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+@media (min-width: 560px) {
+  .frame.hero-frame { aspect-ratio: 4 / 3; }
+}
+
+@media (min-width: 720px) {
+  :root { --gutter: 32px; }
+  .section { padding-top: 96px; }
+  .section h2 { font-size: 42px; }
+  .duo { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .phones { gap: 28px; }
+  .phones .ph { padding: 20px; font-size: 14px; }
+  .phones .ph p { display: block; }
+  .page-head { padding-top: 72px; }
+
+  .frame.hero-frame { aspect-ratio: 16 / 10; }
+  .hero-copy { margin-top: -96px; }
+  .hero h1 { font-size: clamp(46px, 6vw, 54px); }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    height: clamp(560px, 56.25vw, 100svh);
+  }
+
+  .hero-media { position: absolute; inset: 0; }
+
+  .frame.hero-frame {
+    height: 100%;
+    aspect-ratio: auto;
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent);
+            mask-image: linear-gradient(to bottom, #000 78%, transparent);
+  }
+
+  .hero-frame > img { object-position: 50% 50%; }
+  .hero-frame .ph { padding: 20px 20px 20px 54%; }
+
+  /* Keeps the headline readable whatever the screenshot looks like. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(90deg,
+      rgb(var(--bg-rgb) / 0.94) 0%,
+      rgb(var(--bg-rgb) / 0.8) 32%,
+      rgb(var(--bg-rgb) / 0) 66%);
+  }
+
+  .hero-copy {
+    z-index: 2;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .hero h1 {
+    max-width: 11em;
+    margin: 0;
+    font-size: clamp(48px, 4.6vw, 64px);
+  }
+
+  .hero .sub { margin: 18px 0 28px; }
+  .hero .dl { justify-content: flex-start; }
+}

@@ -1,7 +1,7 @@
 {
   "name": "deadclock-com",
   "private": true,
-  "description": "Marketing site for the Deadclock desktop overlay",
+  "description": "Marketing site for Deadclock",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"

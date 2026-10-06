@@ -1,0 +1,12 @@
+# Where the Windows download buttons go. Change the URLs here, the HTML never changes.
+#
+# TODO: replace both placeholders before launch.
+#
+# /download/windows  -> the Windows installer (.exe). Host it somewhere other than this site:
+#                       Cloudflare static assets cap files at 25 MiB. GitHub Releases or R2 both work.
+#                       A GitHub "latest" link keeps this line the same across releases:
+#                       https://github.com/<owner>/<repo>/releases/latest/download/<installer>.exe
+# /download/overwolf -> the Overwolf store listing, https://www.overwolf.com/app/<publisher>-<app>
+
+/download/windows   https://todo-installer-url.invalid/Deadclock-Setup.exe   302
+/download/overwolf  https://www.overwolf.com/app/TODO-deadclock              302

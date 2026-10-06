@@ -6,6 +6,10 @@
     "enabled": true
   },
   "assets": {
-    "directory": "."
-  }
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "deadclock.gg", "custom_domain": true }
+  ]
 }
