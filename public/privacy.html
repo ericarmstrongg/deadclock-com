@@ -24,7 +24,7 @@
 
   <div class="page-head">
     <h1>Privacy Policy</h1>
-    <p class="note">Last updated September 12, 2026</p>
+    <p class="note">Last updated October 10, 2026</p>
   </div>
 
   <article class="prose">
@@ -40,28 +40,46 @@
 
     <h2>2. Information collected automatically</h2>
     <ul>
-      <li><strong>Usage and diagnostics.</strong> The apps, and the platforms they run on, may collect information such as app opens, screens viewed, features used, crashes, and performance data. On iPhone this is collected through Google Firebase Analytics. On Windows, the Overwolf platform collects analytics as part of running the app.</li>
+      <li><strong>Usage and diagnostics.</strong> The apps, and the platforms they run on, may collect information such as app opens, screens viewed, features used, crashes, and performance data. On iPhone this is collected through Google Firebase Analytics. On Windows, the Overwolf platform collects analytics as part of running the app. The Windows app keeps this to the minimum Overwolf requires, but it can't be switched off. The Windows app does not use Firebase Analytics.</li>
       <li><strong>Device and technical data.</strong> Such as device type, operating system, app version, language, approximate region, and IP address.</li>
       <li><strong>Advertising data.</strong> Where ads are shown, our advertising partners may collect device or advertising identifiers, as described in Section 4.</li>
       <li><strong>Website.</strong> deadclock.gg is hosted by Cloudflare, which processes standard request data such as IP address and browser type to deliver and protect the site. The website itself does not set cookies or use analytics.</li>
     </ul>
 
-    <h2>3. Game data</h2>
-    <p>The desktop app uses game event data made available through Overwolf, such as match time and match state, to run your timers. This data is used on your device to provide the app's features. We do not use it to identify you.</p>
+    <h2>3. Game data and the Windows app's network requests</h2>
+    <p>The Windows app is the Deadclock desktop app that runs on Overwolf. It uses game data made available through Overwolf. Match time and match state, which run your timers, are used on your device. Player identifiers are handled differently, as described next.</p>
+
+    <h3>Lobby scouting</h3>
+    <p>When a Deadlock match starts, the Windows app reads the Steam account ID of every player in the match, yours included (up to 12 players). It sends those IDs to the Deadlock API (api.deadlock-api.com) to look up each player's rank and hero statistics from the last 30 days, and shows the results in the app window. <strong>This feature is always on.</strong> The app has no setting to turn it off. Uninstalling the app stops it.</p>
+    <ul>
+      <li><strong>Steam account IDs are public identifiers.</strong> Each one is tied to a Steam profile. They belong to the other players in your match as well as to you.</li>
+      <li><strong>The Deadlock API is a third party.</strong> It is an independent community project run by volunteers, and it is not operated by Valve, Overwolf, or Deadclock. Its server receives the account IDs and your IP address. See <a href="https://deadlock-api.com">deadlock-api.com</a>.</li>
+      <li><strong>Deadclock doesn't receive this data.</strong> We don't operate a server that receives the IDs or the results. The app keeps results in memory for about 15 minutes. It doesn't save them to disk or send them anywhere else.</li>
+    </ul>
+
+    <h3>Other requests the Windows app makes</h3>
+    <p>These requests don't carry player or account data. The servers that answer them can see your IP address.</p>
+    <ul>
+      <li><strong>Hero images.</strong> The app window loads the list of heroes from the Deadlock API (api.deadlock-api.com/v1/assets/heroes) and downloads the hero images from its asset host.</li>
+      <li><strong>Remote configuration.</strong> When the app starts, it reads timer definitions and the hero list from Google Cloud Firestore (Firebase). This is an anonymous read of project data, and no user data is sent with it. The Windows app does not use Firebase Analytics.</li>
+      <li><strong>Updates.</strong> The app checks Overwolf's update servers (electron-updates.overwolf.com) for new versions. Like any download, this reveals your IP address and the app version.</li>
+    </ul>
 
     <h2>4. Ads</h2>
     <p>Free versions of Deadclock may show ads.</p>
     <ul>
       <li><strong>iPhone.</strong> Ads are served by Google AdMob. We request non-personalized ads. Where the law requires it, such as in the European Economic Area (EEA) and United Kingdom, you'll be asked for consent before ads load.</li>
-      <li><strong>Windows.</strong> Ads are served through Overwolf's advertising platform and its partners, which may use cookies, device identifiers, or similar technologies, subject to your consent choices where required.</li>
+      <li><strong>Windows.</strong> Ads are served through Overwolf's advertising platform and its partners, which may use cookies, device identifiers, or similar technologies, subject to your consent choices where required. The Windows app shows Overwolf's consent screen. Where required, you can manage your ad privacy choices later in the app's Settings, through Overwolf's consent management.</li>
     </ul>
     <p>Advertising partners process information under their own privacy policies, linked in Section 9.</p>
 
     <h2>5. Purchases</h2>
-    <p>In-app purchases and subscriptions are processed by Apple or Overwolf. We never receive or store your payment card details. We may receive limited information needed to confirm a purchase, such as whether it is active.</p>
+    <p>In-app purchases and subscriptions are processed by Apple on iPhone and by Overwolf on Windows.</p>
+    <p>On Windows, a Premium plan may be offered in the future. If it is, it will be processed through Overwolf's subscriptions service, with Tebex as the merchant of record. At checkout, an identifier the app generates for your PC is sent to Overwolf and Tebex to link the purchase.</p>
+    <p>We never receive or store your payment card details. We may receive limited information needed to confirm a purchase, such as whether it is active.</p>
 
     <h2>6. Information stored on your device</h2>
-    <p>Your settings, preferences, and app logs are stored on your device. Local logs stay on your device unless you choose to send them to us.</p>
+    <p>Your settings, preferences, hotkeys, app logs, and the Windows app's crash log are stored on your device. They are not uploaded. Local logs stay on your device unless you choose to send them to us.</p>
 
     <h2>7. How we use information</h2>
     <ul>
@@ -77,8 +95,9 @@
     <h2>8. How we share information</h2>
     <p><strong>We do not sell your personal information.</strong> We share information only:</p>
     <ul>
-      <li>With service providers that help us run the Services, such as Google, Apple, Overwolf, and Cloudflare</li>
+      <li>With service providers that help us run the Services, such as Google, Apple, Overwolf, Tebex, and Cloudflare</li>
       <li>With advertising partners, as described in Section 4</li>
+      <li>With the Deadlock API, as described in Section 3. The Windows app sends it the Steam account IDs of the players in your match and your IP address. Deadclock does not receive them</li>
       <li>When required by law, or when we believe it's necessary to protect the rights, safety, or property of Deadclock, our users, or others</li>
       <li>As part of a merger, acquisition, financing, or sale of assets, in which case this policy continues to apply to your information</li>
       <li>With your consent</li>
@@ -88,21 +107,23 @@
     <p>These providers process information under their own policies:</p>
     <ul>
       <li>Apple: <a href="https://www.apple.com/legal/privacy/">Privacy Policy</a></li>
-      <li>Google (Firebase and AdMob): <a href="https://policies.google.com/privacy">Privacy Policy</a>, <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>, <a href="https://policies.google.com/technologies/partner-sites">How Google uses data from partner apps</a></li>
+      <li>Google (Firebase, including Firestore, and AdMob): <a href="https://policies.google.com/privacy">Privacy Policy</a>, <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>, <a href="https://policies.google.com/technologies/partner-sites">How Google uses data from partner apps</a></li>
       <li>Overwolf: <a href="https://www.overwolf.com/legal/privacy">Privacy Policy</a></li>
+      <li>Tebex, the merchant of record for Windows purchases: <a href="https://checkout.tebex.io/privacy">Privacy Policy</a></li>
+      <li>Deadlock API, an independent community project not operated by Valve, Overwolf, or Deadclock: <a href="https://deadlock-api.com">Website</a>, <a href="https://deadlock-api.com/data-privacy">Data Privacy</a></li>
       <li>Cloudflare: <a href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</a></li>
     </ul>
     <p>We are not responsible for the privacy practices of third parties.</p>
 
     <h2>10. Data retention</h2>
-    <p>We keep information only as long as needed for the purposes in this policy, or as required by law. Support emails and feedback are kept as long as needed to respond and for reasonable record keeping. Information held by third parties is kept under their policies.</p>
+    <p>We keep information only as long as needed for the purposes in this policy, or as required by law. Support emails and feedback are kept as long as needed to respond and for reasonable record keeping. The Windows app keeps lobby scouting results in memory for about 15 minutes and does not save them to disk. Information held by third parties is kept under their policies.</p>
 
     <h2>11. Security</h2>
     <p>We use reasonable measures to protect information. No method of transmission or storage is completely secure, so we can't guarantee absolute security.</p>
 
     <h2>12. Your choices and rights</h2>
     <ul>
-      <li><strong>Ads and consent.</strong> Use the consent options shown in the apps and your device's privacy settings to manage how ads use your information.</li>
+      <li><strong>Ads and consent.</strong> Use the consent options shown in the apps and your device's privacy settings to manage how ads use your information. In the Windows app, you can change your ad privacy choices in Settings.</li>
       <li><strong>Stop collection.</strong> You can stop all collection by the apps by uninstalling them.</li>
       <li><strong>Privacy rights.</strong> Depending on where you live, including the EEA, UK, and certain US states such as California, you may have the right to access, correct, delete, or receive a copy of your personal information, to object to or restrict certain processing, and to withdraw consent. To make a request, email <a href="mailto:support@deadclock.gg">support@deadclock.gg</a>. We may need to verify your request. We will not discriminate against you for exercising your rights.</li>
       <li><strong>Complaints.</strong> If you're in the EEA or UK, you may also contact your local data protection authority.</li>
