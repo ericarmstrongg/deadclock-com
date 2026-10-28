@@ -1,14 +1,13 @@
 /*
  * Deadclock landing page behavior. Loaded with defer. Everything here is progressive
- * enhancement: with JS off the page still reads top to bottom, and the Windows
- * buttons are disabled "Coming soon" buttons either way.
+ * enhancement: with JS off the page still reads top to bottom. (The Windows "Notify me"
+ * buttons need JS: they are handled by notify.js.)
  *
  *  - header gets a background once you scroll
  *  - sections fade in as they scroll into view
  *  - [data-overlay] cards are live demos of the in-game overlay: timers count down,
  *    warn at 15s, flash at zero, and a caption stands in for the spoken callout
  *  - the hero tilts toward the pointer
- *  - [data-count] numbers count up once
  *  - [data-tabs] is the Windows app tour, [data-phones] is the iPhone coverflow
  *  - .card gets a cursor spotlight
  */
@@ -27,6 +26,11 @@
     new IntersectionObserver(function (entries) {
       fn(entries[entries.length - 1].isIntersecting);
     }, { threshold: threshold || 0.2 }).observe(el);
+  }
+
+  // Reports to analytics.js, which may not be there (or may not be allowed to measure).
+  function track(name, params) {
+    if (window.dcTrack) window.dcTrack(name, params);
   }
 
   function retrigger(el, cls) {
@@ -180,28 +184,6 @@
     });
   }
 
-  /* ---------- count-up numbers ---------- */
-
-  $$('[data-count]').forEach(function (el) {
-    var end = +el.dataset.count;
-    var label = el.firstChild;
-    if (reduce || !hasIO || !label) return;
-
-    label.nodeValue = '0';
-    var seen = false;
-    watch(el, function (on) {
-      if (!on || seen) return;
-      seen = true;
-      var start = null;
-      (function step(now) {
-        if (start === null) start = now;
-        var k = Math.min(1, (now - start) / 1400);
-        label.nodeValue = String(Math.round(end * (1 - Math.pow(1 - k, 3))));
-        if (k < 1) requestAnimationFrame(step);
-      })(performance.now());
-    }, 0.6);
-  });
-
   /* ---------- windows app tour ---------- */
 
   var tour = $('[data-tabs]');
@@ -243,6 +225,7 @@
       tab.addEventListener('click', function () {
         picked = true;
         select(i);
+        track('tour_tab', { tab: tab.dataset.tab });
       });
       tab.addEventListener('keydown', function (e) {
         var step = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
@@ -252,6 +235,7 @@
         var next = (i + step + tabs.length) % tabs.length;
         select(next);
         tabs[next].focus();
+        track('tour_tab', { tab: tabs[next].dataset.tab });
       });
     });
 
@@ -311,12 +295,19 @@
       autoTimer = setTimeout(function () { go(active + 1); queue(4800); }, delay);
     };
 
+    // Only the visitor's own choices are reported, not the autoplay.
+    var chose = function (k) {
+      go(k);
+      queue(10000);
+      track('phone_screen', { screen: phones[active].dataset.tag });
+    };
+
     phones.forEach(function (phone, k) {
       var chip = document.createElement('button');
       chip.type = 'button';
       chip.className = 'chip';
       chip.textContent = phone.dataset.tag;
-      chip.addEventListener('click', function () { go(k); queue(10000); });
+      chip.addEventListener('click', function () { chose(k); });
       chips.appendChild(chip);
     });
 
@@ -331,14 +322,13 @@
       startX = null;
       if (Math.abs(dx) < 40) return;
       swiped = true;
-      go(active + (dx < 0 ? 1 : -1));
-      queue(10000);
+      chose((active + (dx < 0 ? 1 : -1) + count) % count);
     });
     strip.addEventListener('click', function (e) {
       if (swiped) { swiped = false; return; }
       var phone = e.target.closest('.phone');
       var k = phones.indexOf(phone);
-      if (k > -1 && k !== active) { go(k); queue(10000); }
+      if (k > -1 && k !== active) chose(k);
     });
     strip.addEventListener('pointerenter', function () { clearTimeout(autoTimer); });
     strip.addEventListener('pointerleave', function () { queue(2500); });

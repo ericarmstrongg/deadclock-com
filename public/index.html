@@ -23,6 +23,8 @@
 <link rel="preload" as="image" href="/images/hero-gameplay-1280.webp" imagesrcset="/images/hero-gameplay-1280.webp 1280w, /images/hero-gameplay.webp 2560w" imagesizes="100vw" fetchpriority="high" />
 <script>document.documentElement.classList.add('js');</script>
 <link rel="stylesheet" href="/styles.css" />
+<script src="/analytics.js" defer></script>
+<script src="/notify.js" defer></script>
 <script src="/site.js" defer></script>
 </head>
 <body class="home">
@@ -43,7 +45,7 @@
 <main>
 
 <!-- ============ HERO ============ -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-bg" aria-hidden="true">
     <img src="/images/hero-gameplay-1280.webp"
          srcset="/images/hero-gameplay-1280.webp 1280w, /images/hero-gameplay.webp 2560w"
@@ -55,20 +57,19 @@
     <div class="hero-copy">
       <p class="eyebrow reveal"><span class="dot"></span> Timers and audio alerts for Deadlock</p>
       <h1 class="reveal" style="--d:.05s">Never miss <span class="accent">a spawn.</span></h1>
-      <p class="tag reveal" style="--d:.12s">Never touch a stopwatch.</p>
-      <p class="lead reveal" style="--d:.2s">Deadclock counts down every camp, buff, box and urn, then flashes and calls it out right before it spawns. On your PC, in the game, and in your pocket.</p>
+      <p class="lead reveal" style="--d:.14s">Deadclock counts down every camp, buff, box and urn, then flashes and calls it out right before it spawns. On your PC, in the game, and in your pocket.</p>
 
       <div class="cta reveal" style="--d:.28s">
-        <button class="btn btn-soon" type="button" disabled>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-          Windows <span class="pill">Coming soon</span>
+        <button class="btn btn-soon" type="button" data-notify="hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          <span class="btn-label">Notify me for Windows</span>
         </button>
         <a class="btn btn-primary" href="https://apps.apple.com/app/id6738394006">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>
           Download for iPhone
         </a>
       </div>
-      <p class="note reveal" style="--d:.34s">Free to download. The Windows app is also coming to the Overwolf store.</p>
+      <p class="note reveal" style="--d:.34s">Free to download. Windows is coming soon to the Overwolf store.</p>
     </div>
 
     <div class="hero-demo reveal" style="--d:.3s">
@@ -97,32 +98,12 @@
   <span class="scroll-cue" aria-hidden="true"></span>
 </section>
 
-<!-- ============ TICKER ============ -->
-<div class="ticker" aria-label="Timers Deadclock tracks">
-  <div class="ticker-track">
-    <ul class="ticker-list">
-      <li>Small camps</li><li>Boxes</li><li>Bridge buffs</li><li>Medium camps</li><li>Zipline boost</li><li>Large camps</li><li>Sinner's Sacrifice</li><li>Urn</li><li>Times Square boxes</li>
-    </ul>
-    <ul class="ticker-list" aria-hidden="true">
-      <li>Small camps</li><li>Boxes</li><li>Bridge buffs</li><li>Medium camps</li><li>Zipline boost</li><li>Large camps</li><li>Sinner's Sacrifice</li><li>Urn</li><li>Times Square boxes</li>
-    </ul>
-  </div>
-</div>
-
-<!-- ============ STATS ============ -->
-<section class="wrap stats" aria-label="Deadclock at a glance">
-  <div class="stat reveal"><b data-count="9">9</b><span>map timers, all counting down at once</span></div>
-  <div class="stat reveal" style="--d:.08s"><b data-count="15" data-suffix="s">15<i>s</i></b><span>early warning before a spawn, out of the box</span></div>
-  <div class="stat reveal" style="--d:.16s"><b data-count="44">44</b><span>heroes to look up in the iPhone app</span></div>
-  <div class="stat reveal" style="--d:.24s"><b data-count="12">12</b><span>players scouted in every lobby on Windows</span></div>
-</section>
-
 <!-- ============ IN-GAME OVERLAY ============ -->
 <section class="section wrap" id="overlay">
   <div class="section-head center reveal">
     <p class="eyebrow">Windows · In-game overlay <span class="pill">Coming soon</span></p>
     <h2>Right there <span class="accent">when it counts.</span></h2>
-    <p class="lead">A small, clear overlay sits on top of Deadlock and shows what spawns next. No alt-tabbing, no second screen, no phone propped against your monitor.</p>
+    <p class="lead">Deadclock's overlay sits inside the game so you can see the upcoming spawns without alt-tabbing. Drag it to any spot you like or hide it at any time.</p>
   </div>
 
   <div class="stage reveal">
@@ -167,8 +148,8 @@
 
   <div class="trio">
     <div class="mini reveal">
-      <h3>One hotkey</h3>
-      <p>Show or hide the overlay with <kbd>Ctrl+Shift+D</kbd>, without leaving the game.</p>
+      <h3>Hotkey</h3>
+      <p>Show or hide the overlay with <kbd>Ctrl+Shift+D</kbd> or rebind it to any key you want.</p>
     </div>
     <div class="mini reveal" style="--d:.08s">
       <h3>Make it yours</h3>
@@ -176,8 +157,16 @@
     </div>
     <div class="mini reveal" style="--d:.16s">
       <h3>Set it and forget it</h3>
-      <p>Start it with Windows if you like. Fired timers linger for a few seconds, so you never wonder what just went off.</p>
+      <p>The overlay appears automatically when you join a game.</p>
     </div>
+  </div>
+
+  <div class="app-cta center reveal">
+    <button class="btn btn-soon" type="button" data-notify="overlay">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+      <span class="btn-label">Notify me for Windows</span>
+    </button>
+    <p class="note">The overlay comes with the Windows app, coming soon to the Overwolf store.</p>
   </div>
 </section>
 
@@ -186,7 +175,7 @@
   <div class="section-head reveal">
     <p class="eyebrow">Windows · Desktop app <span class="pill">Coming soon</span></p>
     <h2>Run it on a <span class="accent">second monitor.</span></h2>
-    <p class="lead">The Deadclock app follows the live match while you play: score, souls, momentum and every timer, with the overlay on your game screen.</p>
+    <p class="lead">The Deadclock app follows the live match while you play: score, souls, momentum and every timer.</p>
   </div>
 
   <div class="app-show" data-tabs>
@@ -237,11 +226,11 @@
       </div>
 
       <div class="app-cta reveal">
-        <button class="btn btn-soon" type="button" disabled>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-          Windows <span class="pill">Coming soon</span>
+        <button class="btn btn-soon" type="button" data-notify="windows">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          <span class="btn-label">Notify me for Windows</span>
         </button>
-        <p class="note">Also coming to the Overwolf store.</p>
+        <p class="note">Coming soon to the Overwolf store. One email the day it's ready.</p>
       </div>
     </div>
   </div>
@@ -311,8 +300,8 @@
   <div class="cards">
     <article class="card reveal">
       <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg></div>
-      <h3>Every timer, covered</h3>
-      <p>Camps, buffs, boxes, Sinner's Sacrifice, the Urn and more, all counting down at the same time.</p>
+      <h3>Every timer covered</h3>
+      <p>Camps, bridge buffs, boxes, Sinner's Sacrifice, the Urn and more, all counting down so you don't have to.</p>
       <div class="tags"><span class="tag-chip">Windows</span><span class="tag-chip">iPhone</span></div>
     </article>
 
@@ -340,7 +329,7 @@
     <article class="card reveal" style="--d:.07s">
       <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></div>
       <h3>Heroes, items, patch notes</h3>
-      <p>All 44 heroes with abilities and builds, the full item shop, and the latest Deadlock update.</p>
+      <p>All 44 heroes with abilities and builds, the full item shop, and the latest Deadlock updates.</p>
       <div class="tags"><span class="tag-chip">iPhone</span></div>
     </article>
 
@@ -367,8 +356,11 @@
       <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
       <h3>Windows</h3>
       <p>The desktop app and in-game overlay, with lobby scouting and per-timer alerts.</p>
-      <button class="btn btn-soon" type="button" disabled>Coming soon</button>
-      <p class="note">Overwolf store listing: coming soon.</p>
+      <button class="btn btn-soon" type="button" data-notify="download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        <span class="btn-label">Notify me for Windows</span>
+      </button>
+      <p class="note">Also coming to the Overwolf store. One email the day it's ready.</p>
     </div>
 
     <div class="platform is-live reveal" style="--d:.1s">
@@ -396,6 +388,37 @@
     <p>Not affiliated with Valve Corporation. Deadlock is a trademark of Valve Corporation.</p>
   </div>
 </footer>
+
+<!-- ============ NOTIFY ME (Windows waitlist) ============ -->
+<dialog class="notify" id="notify" aria-labelledby="notify-title">
+  <form class="notify-box" novalidate>
+    <button class="notify-close" type="button" data-notify-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="notify-ask">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></div>
+      <h2 id="notify-title">Be first <span class="accent">in line.</span></h2>
+      <p class="notify-lead">Deadclock for Windows, with the in-game overlay, is coming soon to the Overwolf store. Leave your email and we'll send one message the day it's ready.</p>
+
+      <label class="sr-only" for="notify-email">Email address</label>
+      <div class="notify-row">
+        <input id="notify-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required />
+        <button class="btn btn-primary" type="submit">Notify me</button>
+      </div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <p class="notify-error" role="alert" hidden></p>
+      <p class="note">One email when it launches. Nothing else, and we never share it. <a href="/privacy#website">Privacy</a></p>
+    </div>
+
+    <div class="notify-done" hidden>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2>You're on the <span class="accent">list.</span></h2>
+      <p class="notify-lead">We'll email you the day Deadclock for Windows is ready. In the meantime, the iPhone app is out now.</p>
+      <a class="btn btn-primary" href="https://apps.apple.com/app/id6738394006">Download for iPhone</a>
+    </div>
+  </form>
+</dialog>
 
 </body>
 </html>

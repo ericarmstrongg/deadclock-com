@@ -1,14 +1,21 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "deadclock-com",
+  "main": "src/worker.js",
   "compatibility_date": "2026-07-24",
   "observability": {
     "enabled": true
   },
   "assets": {
     "directory": "./public",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Static files never touch the Worker. Only the API does.
+    "run_worker_first": ["/api/*"]
   },
+  // Windows waitlist: who clicked "Notify me" and who left their email.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "deadclock-interest", "database_id": "fc7bc2a5-6ccb-4b06-b40b-d33a5852f719" }
+  ],
   "routes": [
     { "pattern": "deadclock.gg", "custom_domain": true }
   ]

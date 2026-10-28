@@ -224,19 +224,31 @@ kbd {
   transform: translateY(-2px);
 }
 
-/* A button for a download that isn't out yet. It's a real <button disabled>, so it can't be activated. */
-.btn-soon,
-.btn-soon:hover {
+/* Stands in for a Windows download that isn't out yet. It opens the "notify me" dialog (notify.js). */
+.btn-soon {
   overflow: hidden;
   border-style: dashed;
-  border-color: var(--line-hi);
   background: rgb(240 222 192 / 0.04);
-  color: var(--cream-dim);
-  cursor: default;
-  transform: none;
 }
 
-.btn-soon:disabled { opacity: 1; }
+.btn-soon svg { color: var(--orange); }
+
+.btn-soon:hover {
+  border-color: var(--orange);
+  background: rgb(var(--orange-rgb) / 0.1);
+  transform: translateY(-2px);
+}
+
+/* Once someone has left their email on this device. */
+.btn-soon.is-done {
+  border-style: solid;
+  border-color: rgb(127 197 138 / 0.5);
+  background: rgb(127 197 138 / 0.08);
+  color: var(--green);
+}
+
+.btn-soon.is-done svg { color: var(--green); }
+.btn-soon.is-done::after { display: none; }
 
 .btn-soon::after {
   content: "";
@@ -410,14 +422,6 @@ kbd {
   line-height: 0.94;
   letter-spacing: -0.015em;
   text-shadow: 0 4px 40px rgb(var(--bg-rgb) / 0.8);
-}
-
-.hero .tag {
-  margin: 18px 0 0;
-  font-family: var(--display);
-  font-size: clamp(24px, 6.4vw, 38px);
-  line-height: 1.1;
-  color: var(--orange);
 }
 
 .hero .lead { max-width: 34em; margin-inline: auto; }
@@ -607,87 +611,6 @@ kbd {
 
 .ov-say.show { opacity: 1; transform: none; }
 .ov-say svg { width: 18px; height: 18px; flex: none; color: var(--orange); }
-
-/* ---------- timer ticker ---------- */
-
-.ticker {
-  position: relative;
-  overflow: hidden;
-  padding: 20px 0;
-  border-block: 1px solid var(--line);
-  background: rgb(22 35 29 / 0.55);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-}
-
-.ticker-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 44s linear infinite;
-}
-
-.ticker:hover .ticker-track { animation-play-state: paused; }
-
-.ticker-list {
-  display: flex;
-  flex: none;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.ticker-list li {
-  position: relative;
-  padding: 0 30px;
-  font-family: var(--display);
-  font-size: clamp(22px, 3vw, 34px);
-  line-height: 1.2;
-  color: var(--cream-dim);
-  white-space: nowrap;
-}
-
-.ticker-list li::after {
-  content: "";
-  position: absolute;
-  right: -4px;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  margin-top: -4px;
-  background: var(--orange);
-  transform: rotate(45deg);
-}
-
-/* ---------- stats ---------- */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 16px;
-  padding-block: 64px 8px;
-}
-
-.stat { text-align: center; }
-
-.stat b {
-  display: block;
-  font-family: var(--display);
-  font-size: clamp(46px, 7vw, 78px);
-  font-weight: 400;
-  line-height: 1;
-  color: var(--cream);
-}
-
-.stat b i { font-style: normal; color: var(--orange); }
-
-.stat span {
-  display: block;
-  max-width: 14em;
-  margin: 8px auto 0;
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--cream-dim);
-}
 
 /* ---------- in-game overlay stage ---------- */
 
@@ -930,6 +853,7 @@ kbd {
 
 .app-cta { margin-top: 28px; }
 .app-cta .note { margin: 12px 0 0; }
+.app-cta.center { margin-top: 44px; text-align: center; }
 
 /* ---------- iphone showcase ---------- */
 
@@ -1199,6 +1123,144 @@ kbd {
 .platform .btn { width: 100%; margin-top: auto; }
 .platform .note { margin: 4px 0 0; }
 
+/* ---------- "notify me" dialog ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Bots fill this in. People never see it. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.notify {
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line-hi);
+  border-radius: 22px;
+  background: linear-gradient(165deg, #1b2b24, #121e19);
+  color: var(--cream);
+  box-shadow: 0 40px 120px rgb(0 0 0 / 0.7), 0 0 90px rgb(var(--orange-rgb) / 0.12);
+}
+
+.notify[open] { animation: notify-in 0.28s var(--ease); }
+
+.notify::backdrop {
+  background: rgb(6 11 9 / 0.74);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  animation: fade-in 0.25s ease-out;
+}
+
+.notify-box { position: relative; padding: 38px 28px 28px; text-align: center; }
+
+.notify-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cream-dim);
+  cursor: pointer;
+}
+
+.notify-close:hover { background: rgb(240 222 192 / 0.08); color: var(--cream); }
+.notify-close svg { width: 20px; height: 20px; }
+
+.notify .icon { margin-inline: auto; }
+.notify h2 { font-size: clamp(32px, 8vw, 40px); }
+.notify-lead { margin: 14px 0 22px; color: var(--cream-dim); font-size: 16px; }
+.notify-row { display: flex; flex-direction: column; gap: 10px; }
+
+.notify-row input {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line-hi);
+  border-radius: 12px;
+  background: rgb(8 14 11 / 0.55);
+  color: var(--cream);
+  font: inherit;
+  font-size: 16px; /* anything smaller makes iOS zoom in on focus */
+}
+
+.notify-row input::placeholder { color: var(--muted); }
+
+.notify-row input:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgb(var(--orange-rgb) / 0.25);
+}
+
+.notify-row input[aria-invalid="true"] { border-color: #ff8a73; }
+
+.notify-error { margin: 12px 0 0; color: #ff8a73; font-size: 14px; }
+.notify .note { margin: 14px 0 0; }
+.notify .note a { text-decoration: underline; }
+.notify-done .notify-lead { margin-bottom: 24px; }
+
+@media (min-width: 480px) {
+  .notify-row { flex-direction: row; }
+  .notify-row .btn { min-width: 140px; }
+}
+
+/* ---------- analytics consent (only shown where the law asks for it) ---------- */
+
+.consent {
+  position: fixed;
+  z-index: 90;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 14px;
+  max-width: 440px;
+  padding: 18px 20px;
+  border: 1px solid var(--line-hi);
+  border-radius: 16px;
+  background: rgb(22 35 29 / 0.97);
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.6);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cream-dim);
+  animation: notify-in 0.3s var(--ease);
+}
+
+.consent p { margin: 0; }
+.consent a { color: var(--cream); text-underline-offset: 3px; }
+.consent-actions { display: flex; gap: 10px; }
+.consent .btn { flex: 1; min-height: 42px; padding: 0 16px; font-size: 15px; min-width: 0; }
+
+/* A text button that looks like the footer links. */
+.linkbtn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cream-dim);
+  font: inherit;
+  cursor: pointer;
+}
+
+.linkbtn:hover { color: var(--orange); }
+
 /* ---------- inner pages (support, privacy, terms, 404) ---------- */
 
 .page-head { padding: 48px 0 28px; }
@@ -1289,6 +1351,8 @@ kbd {
 
 /* ---------- keyframes ---------- */
 
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes notify-in { from { opacity: 0; transform: translateY(14px) scale(0.97); } }
 @keyframes sheen { 0%, 55% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 @keyframes ping { 70%, 100% { box-shadow: 0 0 0 9px rgb(var(--orange-rgb) / 0); } }
 @keyframes ping-green { 70%, 100% { box-shadow: 0 0 0 9px rgb(127 197 138 / 0); } }
@@ -1302,7 +1366,6 @@ kbd {
 }
 @keyframes near { 50% { background-color: rgb(var(--orange-rgb) / 0.14); } }
 @keyframes now-pop { 0% { transform: scale(0.94); } 55% { transform: scale(1.04); } 100% { transform: scale(1); } }
-@keyframes marquee { to { transform: translateX(-50%); } }
 @keyframes ring { 50% { box-shadow: 0 0 0 9px rgb(var(--orange-rgb) / 0.08), 0 0 40px rgb(var(--orange-rgb) / 0.85); } }
 @keyframes march { to { stroke-dashoffset: -14; } }
 @keyframes glow { 50% { opacity: 0.55; transform: scale(1.04); } }
@@ -1323,7 +1386,6 @@ kbd {
   .cta { flex-direction: row; justify-content: center; }
   .cta .btn { width: auto; min-width: 220px; }
   .contact { flex-direction: row; align-items: center; justify-content: space-between; }
-  .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .platforms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1400,7 +1462,6 @@ kbd {
   .hero-copy { text-align: left; }
   .hero .eyebrow .dot { display: block; }
   .hero h1 { font-size: clamp(76px, 8.2vw, 124px); }
-  .hero .tag { font-size: clamp(28px, 2.9vw, 42px); }
   .hero .lead { margin-inline: 0; }
   .hero .cta { justify-content: flex-start; }
   .hero-demo { justify-items: end; }
@@ -1408,11 +1469,14 @@ kbd {
   .scroll-cue { display: block; }
 }
 
+/* Keep both hero buttons on one row on small laptop screens. */
+@media (min-width: 960px) and (max-width: 1279px) {
+  .hero .cta .btn { min-width: 0; padding-inline: 18px; }
+}
+
 /* Anything that moves stops moving for people who ask. The demo timers still tick: that's content. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
-  .ticker-track { animation: none; }
-  .ticker { overflow-x: auto; }
   .js .reveal { opacity: 1; transform: none; }
 }
