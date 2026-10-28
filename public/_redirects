@@ -1,6 +1,7 @@
-# Where the Windows download buttons go. Change the URLs here, the HTML never changes.
+# The Windows app isn't out yet, so the landing page shows "Coming soon" instead of download buttons.
+# Until then, these two paths land on the download section, which says the same thing.
 #
-# TODO: replace both placeholders before launch.
+# TODO: when the Windows app ships, point these at the real URLs and put the buttons back (see README).
 #
 # /download/windows  -> the Windows installer (.exe). Host it somewhere other than this site:
 #                       Cloudflare static assets cap files at 25 MiB. GitHub Releases or R2 both work.
@@ -8,5 +9,5 @@
 #                       https://github.com/<owner>/<repo>/releases/latest/download/<installer>.exe
 # /download/overwolf -> the Overwolf store listing, https://www.overwolf.com/app/<publisher>-<app>
 
-/download/windows   https://todo-installer-url.invalid/Deadclock-Setup.exe   302
-/download/overwolf  https://www.overwolf.com/app/TODO-deadclock              302
+/download/windows   /#download  302
+/download/overwolf  /#download  302
